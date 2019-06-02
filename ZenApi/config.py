@@ -3,7 +3,6 @@ import os
 
 class Config(object):
 
-    # TO DO: Separar base de datos.
     DEBUG               = False
     TESTING             = False
     THREADED            = True
@@ -18,13 +17,19 @@ class Config(object):
 
 class Development(Config):
 
-    DEBUG       = True
-    SERVER_NAME = 'localhost:9000'
+    DEBUG        = True
+    SERVER_NAME  = 'localhost:9000'
+    MONGODB_DB   = 'zen_test'
+    MONGODB_HOST = 'localhost'
+    MONGODB_PORT = 27017
 
 
 class Production(Config):
 
-    SERVER_NAME = 'localhost:5000'
+    SERVER_NAME  = 'localhost:5000'
+    MONGODB_DB   = 'zen'
+    MONGODB_HOST = 'localhost'
+    MONGODB_PORT = 27017
 
 
 class Testing(Config):
