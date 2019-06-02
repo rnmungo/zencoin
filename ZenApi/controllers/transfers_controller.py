@@ -1,9 +1,12 @@
 from flask import request
-from flask_restful import Resource
+from flask_restful import Resource, abort
 from models import Transfer
 from models import Account
 from tools import mongo_to_dict, ZenMail
 from db import Q
+from .exceptions import (APIException,
+                         MissingDataRequest,
+                         ResourceDoesNotExist)
 
 
 class TransfersApiController(Resource):
@@ -13,27 +16,10 @@ class TransfersApiController(Resource):
 
     def post(self):
         # Creación de transferencia y actualización de saldos.
-        content = request.get_json()
-        from_account_id = content.get('from_account_id', '')
-        if not from_account_id:
-            return {'message': 'Error en la solicitud'}, 400
-        to_account_id = content.get('to_account_id', '')
-        if not to_account_id:
-            return {'message': 'Error en la solicitud'}, 400
-        total = round(content.get('total', 0.), 7)
-        if not total:
-            return {'message': 'El total es obligatorio'}, 400
-        if total < 0.0000000:
-            return {'message': 'El total debe ser mayor a cero'}, 400
-        from_account = Account.objects(id=from_account_id, deleted=False).first()
-        if from_account is None:
-            return {'message': 'La cuenta de origen no se encuentra'}, 400
-        if not from_account.checkTransaction(total):
-            return {'message': 'Saldo insuficiente'}, 400
-        to_account = Account.objects(id=to_account_id, deleted=False).first()
-        if to_account is None:
-            return {'message': 'La cuenta de destino no se encuentra'}, 400
         try:
+            from_account_id, to_account_id, total = self.defragment_json(request.get_json())
+            self.validate_request(from_account_id, to_account_id, total)
+            from_account, to_account, total = self.get_data(from_account_id, to_account_id, total)
             transfer = Transfer(
                 from_account=mongo_to_dict(from_account, exclude_fields=['created_at', 'updated_at', 'saldo']),
                 to_account=mongo_to_dict(to_account, exclude_fields=['created_at', 'updated_at', 'saldo']),
@@ -47,10 +33,38 @@ class TransfersApiController(Resource):
             # Envío de e-mail de transferencia.
             ZenMail.send_transfer_message(self.mail, from_account, to_account, transfer.total)
             return mongo_to_dict(transfer, exclude_fields=['updated_at']), 200
-        except Exception as e:
-            message = 'Error de servidor, vuelva a intentar más tarde. '
-            message += 'Si el error persiste, contáctese con soporte.'
-            return {'message': message}, 500
+        except APIException as e:
+            abort(e.code, message=str(e))
+
+    def defragment_json(self, content):
+        from_account_id = content.get('from_account_id', '')
+        to_account_id = content.get('to_account_id', '')
+        total = content.get('total', None)
+        return from_account_id, to_account_id, total
+
+    def validate_request(self, from_account_id, to_account_id, total):
+        if not from_account_id:
+            raise MissingDataRequest('from_account_id')
+        if not to_account_id:
+            raise MissingDataRequest('to_account_id')
+        if not total:
+            raise MissingDataRequest('total')
+        if type(total) != float:
+            raise APIException(409, 'Error de formato, el total debe ser un número decimal.')
+
+    def get_data(self, from_account_id, to_account_id, total):
+        total = round(total, 7)
+        if total < 0.0000000:
+            raise APIException(409, 'El total debe ser mayor a cero')
+        from_account = Account.objects(id=from_account_id, deleted=False).first()
+        if not from_account:
+            raise ResourceDoesNotExist(Account.__name__, from_account_id)
+        to_account = Account.objects(id=to_account_id, deleted=False).first()
+        if not to_account:
+            raise ResourceDoesNotExist(Account.__name__, to_account_id)
+        if not from_account.checkTransaction(total):
+            raise APIException(409, 'Saldo insuficiente')
+        return from_account, to_account, total
 
 
 class MovementsApiController(Resource):
