@@ -23,7 +23,6 @@ class UsersApiController(Resource):
                 password=generate_password_hash(content.get('password', ''))
             ).save()
             # Creación de cuenta asociada al usuario
-            # TO DO: Setear moneda por defecto en opciones.
             currency = Currency.objects(name=DEFAULT_CURRENCY_NAME).first()
             account = Account(
                 user=mongo_to_dict(user, exclude_fields=['created_at', 'updated_at', 'password', 'role']),

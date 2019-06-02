@@ -36,8 +36,10 @@ class AccountsApiController(Resource):
                 number=Account.objects.count()+1
             ).save()
             return mongo_to_dict(account, exclude_fields=['created_at', 'updated_at']), 200
-        except Exception as e:
-            return {'message': str(e)}, 400
+        except Exception:
+            message = 'Error de servidor, vuelva a intentar más tarde. '
+            message += 'Si el error persiste, contáctese con soporte.'
+            return {'message': message}, 500
 
 
 class AccountApiController(Resource):

@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from flask_mail import Mail
-from config import Production as Config
+from config import Development as Config
 from controllers import *
 
 app = Flask(__name__)
