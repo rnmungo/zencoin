@@ -19,8 +19,7 @@ class CurrenciesApiController(Resource):
         return dict_currencies, 200
 
     def post(self):
-        content = request.get_json()
-        name = content.get('name', '')
+        name = request.get_json().get('name', '')
         if not name:
             raise MissingDataRequest('name')
         currency = Currency.objects(name=name).first()
@@ -28,7 +27,7 @@ class CurrenciesApiController(Resource):
             raise APIException(400, 'La moneda ya existe')
         try:
             currency = Currency(name=name).save()
-            return mongo_to_dict(currency, exclude_fields=['created_at', 'updated_at']), 200
+            return mongo_to_dict(currency, exclude_fields=['created_at', 'updated_at']), 203
         except Exception as e:
             abort(e.code, str(e))
 

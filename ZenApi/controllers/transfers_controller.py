@@ -19,7 +19,6 @@ class TransfersApiController(Resource):
     def post(self):
         # Creación de transferencia y actualización de saldos.
         from_account_id, to_account_id, total = self.get_data(request.get_json())
-        self.validate(from_account_id, to_account_id, total)
         from_account, to_account, total = self.get_models(from_account_id, to_account_id, total)
         try:
             transfer = Transfer(
@@ -37,7 +36,9 @@ class TransfersApiController(Resource):
             # Envío de e-mail de transferencia.
             ZenMail.send_transfer_message(self.mail, from_account,
                                           to_account, transfer.total)
-            return mongo_to_dict(transfer, exclude_fields=['updated_at']), 200
+            return mongo_to_dict(transfer, exclude_fields=['updated_at']), 203
+        except SMTPServerDisconnected:
+            return {'message': 'Error al enviar el mail predeterminado.'}, 500
         except Exception as e:
             abort(e.code, str(e))
 
@@ -47,6 +48,7 @@ class TransfersApiController(Resource):
         from_account_id = content.get('from_account_id', '')
         to_account_id = content.get('to_account_id', '')
         total = content.get('total', None)
+        self.validate(from_account_id, to_account_id, total)
         return from_account_id, to_account_id, total
 
     def validate(self, from_account_id, to_account_id, total):

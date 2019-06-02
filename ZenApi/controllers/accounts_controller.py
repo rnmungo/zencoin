@@ -16,7 +16,6 @@ class AccountsApiController(Resource):
     def post(self):
         # Creación de cuenta.
         user_id, currency_id, saldo = self.get_data(request.get_json())
-        self.validate(user_id, currency_id, saldo)
         user, currency, saldo = self.get_models(user_id, currency_id, saldo)
         try:
             account = Account(
@@ -25,7 +24,7 @@ class AccountsApiController(Resource):
                 saldo=saldo,
                 number=Account.objects.count()+1
             ).save()
-            return mongo_to_dict(account, exclude_fields=['created_at', 'updated_at']), 200
+            return mongo_to_dict(account, exclude_fields=['created_at', 'updated_at']), 203
         except Exception as e:
             abort(e.code, str(e))
 
@@ -62,6 +61,7 @@ class AccountsApiController(Resource):
         user_id = content.get('user_id', '')
         currency_id = content.get('currency_id', '')
         saldo = content.get('saldo', 0.)
+        self.validate(user_id, currency_id, saldo)
         return user_id, currency_id, saldo
 
 
