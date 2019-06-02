@@ -1,3 +1,3 @@
 from .api_exception import *
-from .resources import *
+from .model import *
 from .data import *

@@ -11,7 +11,6 @@ class ZenApi(Api):
     def handle_error(self, e):
         return json.dumps({'message': str(e)}), e.code
 
-
 app = Flask(__name__)
 app.config.from_object(Config)
 mail = Mail(app)
