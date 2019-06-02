@@ -14,6 +14,8 @@ class TransfersApiController(Resource):
     def __init__(self, mail):
         self.mail = mail
 
+    ##########################   Recursos   ##########################
+
     def post(self):
         # Creación de transferencia y actualización de saldos.
         from_account_id, to_account_id, total = self.get_data(request.get_json())
@@ -38,6 +40,8 @@ class TransfersApiController(Resource):
             return mongo_to_dict(transfer, exclude_fields=['updated_at']), 200
         except Exception as e:
             abort(e.code, str(e))
+
+    ###########################   Métodos   ###########################
 
     def get_data(self, content):
         from_account_id = content.get('from_account_id', '')

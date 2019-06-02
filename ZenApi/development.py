@@ -1,10 +1,11 @@
-from flask import Flask, jsonify
+from flask import Flask
 from flask_restful import Api
 from flask_mail import Mail
 from config import Development as Config
 from controllers import *
 from mongoengine import connect
 import json
+
 
 class ZenApi(Api):
 

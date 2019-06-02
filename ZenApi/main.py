@@ -4,11 +4,18 @@ from flask_mail import Mail
 from config import Production as Config
 from controllers import *
 from mongoengine import connect
+import json
+
+
+class ZenApi(Api):
+
+    def handle_error(self, e):
+        return json.dumps({'message': str(e)}), e.code
 
 app = Flask(__name__)
 app.config.from_object(Config)
 mail = Mail(app)
-api = Api(app)
+api = ZenApi(app)
 
 connect(app.config['MONGODB_DB'], host=app.config['MONGODB_HOST'], port=app.config['MONGODB_PORT'])
 
