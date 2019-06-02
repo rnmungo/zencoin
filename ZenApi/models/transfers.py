@@ -1,13 +1,18 @@
-from db import Document, BooleanField, DateTimeField, ReferenceField, DecimalField
-from .users import User
-import datetime
+from db import Document
+from db import DateTimeField
+from db import FloatField
+from db import DictField
+from datetime import datetime
 
 
-class Transfers(Document):
+class Transfer(Document):
 
-    state      = BooleanField(default=0)
-    created_at = DateTimeField(default=datetime.datetime.today())
-    updated_at = DateTimeField(default=datetime.datetime.today())
-    from_user  = ReferenceField(User)
-    to_user    = ReferenceField(User)
-    total      = DecimalField(min_value=0., precision=5)
+    created_at   = DateTimeField(default=datetime.today())
+    updated_at   = DateTimeField(default=datetime.today())
+    from_account = DictField()
+    to_account   = DictField()
+    total        = FloatField()
+
+    meta = {
+        'collection': 'transfers'
+    }

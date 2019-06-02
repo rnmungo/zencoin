@@ -1,5 +1,9 @@
-from db import Document, StringField, EmailField, DateTimeField
+from db import Document
+from db import StringField
+from db import EmailField
+from db import DateTimeField
 import datetime
+
 
 class User(Document):
 
@@ -12,3 +16,8 @@ class User(Document):
     role       = StringField(max_length=20)
 
     meta = {'collection': 'users'}
+
+    @property
+    def full_name(self):
+        return "%s %s" % (self.first_name, self.last_name)
+    

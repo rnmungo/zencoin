@@ -1,19 +1,20 @@
 from flask import request
 from flask_restful import Resource
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import User
-from models import mongo_to_dict
+from models import User, Account, Currency, DEFAULT_CURRENCY_NAME
+from tools import mongo_to_dict, ZenMail
 
 
 class UsersApiController(Resource):
 
-    def get(self):
-        users = User.objects.all()
-        return dict([(str(i), mongo_to_dict(user)) for i, user in enumerate(users, start=1)])
+    def __init__(self, mail):
+        self.mail = mail
 
-    def post(self):
+    def post(self, **kwargs):
         content = request.get_json()
         try:
+            # Registro de usuarios
+            # TO DO: Rollback si falla algún guardado de datos.
             user = User(
                 email=content.get('email', ''),
                 first_name=content.get('first_name', ''),
@@ -21,9 +22,22 @@ class UsersApiController(Resource):
                 role=content.get('role', ''),
                 password=generate_password_hash(content.get('password', ''))
             ).save()
-            return mongo_to_dict(user, exclude_fields=['created_at', 'updated_at', 'password']), 203
-        except Exception as e:
-            return {'message': str(e)}, 400
+            # Creación de cuenta asociada al usuario
+            # TO DO: Setear moneda por defecto en opciones.
+            currency = Currency.objects(name=DEFAULT_CURRENCY_NAME).first()
+            account = Account(
+                user=mongo_to_dict(user, exclude_fields=['created_at', 'updated_at', 'password', 'role']),
+                currency=mongo_to_dict(currency, exclude_fields=['created_at', 'updated_at']),
+                saldo=0.,
+                number=Account.objects.count()+1
+            ).save()
+            # Envío de e-mail de bienvenida.
+            ZenMail.send_welcome_message(self.mail, user)
+            return mongo_to_dict(account, exclude_fields=['created_at', 'updated_at']), 203
+        except Exception:
+            message = 'Error de servidor, vuelva a intentar más tarde. '
+            message += 'Si el error persiste, contáctese con soporte.'
+            return {'message': message}, 500
 
 
 class UserApiController(Resource):
@@ -35,6 +49,7 @@ class UserApiController(Resource):
         return mongo_to_dict(user), 200
 
     def put(self, id=None):
+        # Cambio de contraseña
         if id is None:
             return {'message': 'Error en la solicitud'}, 400
         content = request.get_json()
@@ -56,6 +71,7 @@ class UserApiController(Resource):
 class LoginApiController(Resource):
 
     def post(self):
+        # Autenticación de usuario
         content = request.get_json()
         user = User.objects(email=content.get('email', '')).first()
         if user is not None and \
