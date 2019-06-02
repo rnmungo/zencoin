@@ -38,6 +38,8 @@ class CurrencyApiController(Resource):
     def get(self, id=None):
         if id is None:
             raise APIException(404, 'Recurso no encontrado')
+        if len(id) != 24:
+            raise ModelDoesNotExist(Currency.__name__, id)
         currency = Currency.objects(id=id).first()
         if not currency:
             raise ModelDoesNotExist(Currency.__name__, id)

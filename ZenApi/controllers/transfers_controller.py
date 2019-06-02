@@ -52,8 +52,12 @@ class TransfersApiController(Resource):
     def validate(self, from_account_id, to_account_id, total):
         if not from_account_id:
             raise MissingDataRequest('from_account_id')
+        if len(from_account_id) != 24:
+            raise ModelDoesNotExist(Account.__name__, from_account_id)
         if not to_account_id:
             raise MissingDataRequest('to_account_id')
+        if len(to_account_id) != 24:
+            raise ModelDoesNotExist(Account.__name__, to_account_id)
         if not total:
             raise MissingDataRequest('total')
         if type(total) != float:
@@ -79,6 +83,8 @@ class MovementsApiController(Resource):
     def get(self, id=None):
         if id is None:
             raise APIException(404, 'Recurso no encontrado')
+        if len(id) != 24:
+            raise ModelDoesNotExist(Account.__name__, id)
         # Toma las transferencias in/out de la cuenta.
         transfers = Transfer.objects(Q(from_account__id=id) | Q(to_account__id=id)).order_by('-created_at')
         if not transfers.count():
@@ -94,6 +100,8 @@ class TransferApiController(Resource):
     def get(self, id=None):
         if id is None:
             raise APIException(404, 'Recurso no encontrado')
+        if len(id) != 24:
+            raise ModelDoesNotExist(Transfer.__name__, id)
         transfer = Transfer.objects(id=id).first()
         if not transfer:
             raise ModelDoesNotExist(Transfer.__name__, id)
