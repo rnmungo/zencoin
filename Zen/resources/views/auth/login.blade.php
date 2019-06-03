@@ -11,7 +11,6 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Damion|Muli:400,600" rel="stylesheet" type="text/css">
         <!-- Scripts -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDu7tQ49-dLxuBPAb-Z3m3OfPCXRHB1RPQ" async defer></script>
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="{{ asset('js/sweetalert.min.js') }}"></script>
         <!-- Styles -->
