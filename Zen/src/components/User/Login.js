@@ -8,7 +8,6 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      authenticated: false,
       email: '',
       password: '',
       error: ''
@@ -37,9 +36,7 @@ class Login extends Component {
       email: email,
       password: password
     }).then((res) => {
-      this.setState({
-        authenticated: true
-      });
+      this.props.authenticate(res.token)
     }).catch((err) => {
       this.setState({
         error: 'El e-mail y contraseña no coinciden',
