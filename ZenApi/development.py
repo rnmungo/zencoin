@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from flask_mail import Mail
+from flask_cors import CORS
 from config import Development as Config
 from controllers import *
 from mongoengine import connect
@@ -16,6 +17,7 @@ app = Flask(__name__)
 app.config.from_object(Config)
 mail = Mail(app)
 api = ZenApi(app)
+CORS(app)
 
 connect(app.config['MONGODB_DB'], host=app.config['MONGODB_HOST'], port=app.config['MONGODB_PORT'])
 

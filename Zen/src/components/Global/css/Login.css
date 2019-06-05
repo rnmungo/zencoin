@@ -1,3 +1,40 @@
+.Login {
+  background-color: #FF7069;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: #f7f5e3;
+}
+
+.Logo {
+  pointer-events: none;
+  border-radius: 12rem;
+  box-shadow: 1px 2px 4px #eee, -1px 2px 4px #eee;
+}
+
+.Button {
+  background-color: #6B7F9E;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  border-radius: 0.2em;
+  font-size: 1.3rem;
+  color: #f7f5e3;
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+  border: 2px solid #6B7F9E;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.Button:hover {
+  background-color: #5f7291;
+  border-color: #52617A;
+}
+
+
 /*
 =====
 LEVEL 1. RESET STYLES
@@ -6,12 +43,15 @@ LEVEL 1. RESET STYLES
 
 .field{
   --uiFieldPlaceholderColor: var(--fieldPlaceholderColor, #767676);
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .field__input{
   background-color: transparent;
   border-radius: 0;
   border: none;
+  color: #f7f5e3;
 
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -163,6 +203,6 @@ LEVEL 4. SETTINGS
 */
 
 .field{
-  --fieldBorderColor: #ABC64B;
-  --fieldBorderColorActive: #627E43;
+  --fieldBorderColor: #6B7F9E;
+  --fieldBorderColorActive: #52617A;
 }
