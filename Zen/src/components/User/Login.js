@@ -31,7 +31,7 @@ class Login extends Component {
 
   handleLoginButton() {
     const { email, password } = this.state;
-    const instance = axios.create({baseURL: 'http://localhost:9000'});
+    const instance = axios.create({ baseURL: 'http://localhost:9000' });
     instance.post('/auth', {
       email: email,
       password: password
