@@ -38,7 +38,7 @@ class ConversionApiController(Resource):
                     exclude_fields=['created_at', 'updated_at']),
                 rate=rate
             ).save()
-            return mongo_to_dict(conversion, exclude_fields=['created_at', 'updated_at'])
+            return mongo_to_dict(conversion, exclude_fields=['created_at', 'updated_at']), 200
         except APIException as e:
             abort(e.code, str(e))
 
