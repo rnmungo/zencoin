@@ -2,7 +2,7 @@ from db import Document
 from db import StringField
 from db import EmailField
 from db import DateTimeField
-import datetime
+from datetime import datetime
 
 
 class User(Document):
@@ -11,8 +11,8 @@ class User(Document):
     first_name = StringField(max_length=50)
     last_name  = StringField(max_length=50)
     password   = StringField(required=True)
-    created_at = DateTimeField(default=datetime.datetime.today())
-    updated_at = DateTimeField(default=datetime.datetime.today())
+    created_at = DateTimeField(default=datetime.today())
+    updated_at = DateTimeField(default=datetime.today())
     role       = StringField(max_length=20)
 
     meta = {'collection': 'users'}

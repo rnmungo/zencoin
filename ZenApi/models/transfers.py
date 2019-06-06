@@ -13,6 +13,4 @@ class Transfer(Document):
     to_account   = DictField()
     total        = FloatField()
 
-    meta = {
-        'collection': 'transfers'
-    }
+    meta = {'collection': 'transfers'}

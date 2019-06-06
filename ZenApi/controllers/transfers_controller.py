@@ -28,7 +28,6 @@ class TransfersApiController(Resource):
                     exclude_fields=['created_at', 'updated_at', 'saldo']),
                 total=total
             ).save()
-            # TO DO: Rollback si falla el guardado de las cuentas.
             from_account.saldo -= total
             from_account.save()
             to_account.saldo += total

@@ -21,7 +21,6 @@ class UsersApiController(Resource):
         email, f_name, l_name, role, password = self.get_data(request.get_json())
         self.validate(email, f_name, l_name, role, password)
         try:
-            # TO DO: Rollback si falla algún guardado de datos.
             user = User(email=email, first_name=f_name, last_name=l_name,
                     role=role, password=generate_password_hash(password)
                 ).save()
