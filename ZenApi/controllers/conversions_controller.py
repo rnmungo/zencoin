@@ -9,12 +9,12 @@ from .exceptions import (APIException,
 
 class ConversionsApiController(Resource):
 
-    def get(self, id=None):
-        if id is None:
+    def get(self, currency_id=None):
+        if currency_id is None:
             raise APIException(404, 'Recurso no encontrado')
-        if len(id) != 24:
-            raise ModelDoesNotExist(Currency.__name__, id)
-        conversions = Conversion.objects(from_currency__id=id)
+        if len(currency_id) != 24:
+            raise ModelDoesNotExist(Currency.__name__, currency_id)
+        conversions = Conversion.objects(from_currency__id=currency_id)
         if not conversions.count():
             raise APIException(409, 'No hay conversiones cargadas')
         dict_conversions = {}
