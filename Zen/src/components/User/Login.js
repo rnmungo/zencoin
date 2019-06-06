@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, Redirect } from 'react';
 import logo from '../Global/img/money.png';
 import '../Global/css/Login.css';
-import '../Global/css/bootstrap.min.css';
 import axios from  'axios';
 
 class Login extends Component {
@@ -29,6 +28,10 @@ class Login extends Component {
     }
   }
 
+  updateAuthenticateState = (token) => {
+    this.props.authMethod(token);
+  }
+
   handleLoginButton() {
     const { email, password } = this.state;
     const instance = axios.create({ baseURL: 'http://localhost:9000' });
@@ -36,7 +39,9 @@ class Login extends Component {
       email: email,
       password: password
     }).then((res) => {
-      this.props.authenticate(res.token)
+      if (res.status === 200) {
+        this.updateAuthenticateState(res.data.token);
+      }
     }).catch((err) => {
       this.setState({
         error: 'El e-mail y contraseña no coinciden',
@@ -46,7 +51,7 @@ class Login extends Component {
 
   render () {
     return (
-      <div className="Login">
+      <div className="Content">
           <img src={logo} className="Logo"  alt="logo" />
           <label className="field a-field a-field_a2 page__field">
             <input type="text" id="email"

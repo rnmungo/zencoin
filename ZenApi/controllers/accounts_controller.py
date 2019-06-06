@@ -67,11 +67,11 @@ class AccountsApiController(Resource):
 
 class AccountApiController(Resource):
 
-    def get(self, number=None):
+    def get(self, user_id=None):
         # Búsqueda de cuenta para transferir (validación).
-        if number is None:
+        if user_id is None:
             raise APIException(404, 'Recurso no encontrado')
-        account = Account.objects(number=number, deleted=False).first()
+        account = Account.objects(user__id=user_id, deleted=False).first()
         if not account:
-            raise ModelDoesNotExist(Account.__name__, number)
+            raise ModelDoesNotExist(Account.__name__, user_id)
         return mongo_to_dict(account, exclude_fields=['created_at', 'updated_at']), 200
