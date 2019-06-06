@@ -11,7 +11,6 @@ Es necesario tener instaladas las siguientes librerías:</br></br>
 3 - <b>Dependencias de Flask:</b> Deben ejecutar en la consola el siguiente comando: <b>pip install flask-restful flask-mail flask-corn</b>.</br>
 4 - <b>MongoDB:</b> Para instalar MongoDB deben dirigirse a la página oficial en el siguiente <a href="https://www.mongodb.com/download-center/community">enlace</a>, descargar el ejecutable e instalarlo.</br>
 5 - <b>Mongoengine:</b> ORM utilizado para implementar los modelos de la aplicación. Para instalarlo deben ejecutar el comando <b>pip install mongoengine</b>.</br></br>
-<i>NOTA:</i> Para aquellos que no posean el administrador de paquetes <b>PIP</b>, deben instalarlo.</br></br>
 
 ## Instalación
 Para su instalación, se debe descargar el proyecto utilizando el comando <b>git clone https://github.com/Rokethor/zencoin.git</b></br>
