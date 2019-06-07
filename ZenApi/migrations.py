@@ -23,14 +23,13 @@ def run(argv):
          sys.exit()
       elif opt == "-e":
          if arg == 'development':
-            print('development')
             from config import Development as Config
             config = Config()
             migrate(config)
          elif arg == 'production':
-            print('production')
             from config import Production as Config
             config = Config()
             migrate(config)
+         print('Migracion realizada con exito!')
 if __name__ == "__main__":
    run(sys.argv[1:])
