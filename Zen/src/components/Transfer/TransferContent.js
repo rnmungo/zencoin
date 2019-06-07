@@ -30,7 +30,11 @@ class TransferContent extends Component {
       }).then((res) => {
           if (res.status === 200) {
             this.props.account.saldo -= this.state.amount;
-            this.setState({message: 'Transferencia realizada con éxito!'});
+            this.setState({
+              message: 'Transferencia realizada con éxito!',
+              number: 0,
+              amount: 0
+            });
           }
       }).catch((err) => {
         this.setState({
@@ -48,7 +52,12 @@ class TransferContent extends Component {
         instance.get('/destiny/' + this.state.number)
           .then((res) => {
             if (res.status === 200) {
-              this.transfer(res.data);
+              if (res.data.id === this.props.account.id) {
+                this.setState({message: 'No puede transferir a su propia cuenta'})
+              }
+              else {
+                this.transfer(res.data);
+              }
             }
         }).catch((err) => {
           this.setState({

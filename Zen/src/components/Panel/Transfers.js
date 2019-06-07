@@ -49,7 +49,7 @@ class Transfers extends Component {
         return (
           <div className="container border rounded text-center mt-3">
             <h3>Últimos Movimientos</h3>
-            <p>Cargando...</p>
+            <p>Sin resultados...</p>
           </div>
         );
       }

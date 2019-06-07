@@ -45,7 +45,12 @@ class Register extends Component {
             'role': 'customer'
         }).then((res) => {
           if (res.status === 200) {
-            this.setState({message: '¡Usuario registrado correctamente!'});
+            this.setState({
+                message: '¡Usuario registrado correctamente!',
+                first_name: '',
+                last_name: '',
+                email: '',
+                password: ''});
           }
         }).catch((err) => {
             this.setState({

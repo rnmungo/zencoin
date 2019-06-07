@@ -22,12 +22,12 @@ class Charts extends Component {
         user: PropTypes.object.isRequired
     }
 
-    getTransfers = (account, conversions) => {
+    getTransfers = (account) => {
       const instance = axios.create({ baseURL: 'http://localhost:9000' });
       instance.get('/movements/' + account.id)
         .then((res) => {
           if (res.status === 200) {
-            this.setState({account: account, conversions: conversions, transfers: res.data});
+            this.setState({transfers: res.data});
           }
       }).catch((err) => {
         console.log(err);
@@ -40,12 +40,17 @@ class Charts extends Component {
         instance.get('/conversions/' + account.currency.id)
           .then((res) => {
             if (res.status === 200) {
-              this.getTransfers(account, res.data);
+              this.setState({conversions: res.data});
             }
         }).catch((err) => {
           console.log(err);
         });
       }
+    }
+
+    getAssociatedData = (account) => {
+      this.getConversions(account);
+      this.getTransfers(account);
     }
 
     componentDidMount() {
@@ -54,7 +59,7 @@ class Charts extends Component {
         instance.get('/accounts/' + this.props.user.id)
           .then((res) => {
             if (res.status === 200) {
-              this.getConversions(res.data)
+              this.setState({account: res.data}, () => this.getAssociatedData(this.state.account));
             }
         }).catch((err) => {
           console.log(err);

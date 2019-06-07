@@ -36,8 +36,6 @@ class TransfersApiController(Resource):
             ZenMail.send_transfer_message(self.mail, from_account,
                                           to_account, transfer.total)
             return mongo_to_dict(transfer, exclude_fields=['updated_at']), 200
-        except SMTPServerDisconnected:
-            return {'message': 'Error al enviar el mail predeterminado.'}, 500
         except Exception as e:
             abort(e.code, str(e))
 

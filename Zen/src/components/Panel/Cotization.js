@@ -35,7 +35,7 @@ class Cotization extends Component {
           <div className="container border rounded text-center mt-3">
             <h3>Cotizaciones</h3>
             <p>Las cotizaciones son meramente informativas</p>
-            <p>Cargando...</p>
+            <p>Sin resultados...</p>
           </div>
         );
       }

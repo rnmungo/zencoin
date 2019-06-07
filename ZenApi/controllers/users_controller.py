@@ -31,15 +31,13 @@ class UsersApiController(Resource):
                     exclude_fields=['created_at', 'updated_at', 'password', 'role']),
                 currency=mongo_to_dict(currency,
                     exclude_fields=['created_at', 'updated_at']),
-                saldo=0.,
+                saldo=100., # Inicia con saldo de 100 ZenCoins con propósitos de prueba.
                 number=Account.objects.count()+1
             ).save()
             # Envío de e-mail de bienvenida.
             ZenMail.send_welcome_message(self.mail, user)
             return mongo_to_dict(account,
                 exclude_fields=['created_at', 'updated_at']), 200
-        except SMTPServerDisconnected:
-            return {'message': 'Error al enviar el mail predeterminado.'}, 500
         except Exception as e:
             abort(e.code, str(e))
 
