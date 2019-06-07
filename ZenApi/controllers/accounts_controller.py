@@ -24,7 +24,7 @@ class AccountsApiController(Resource):
                 saldo=saldo,
                 number=Account.objects.count()+1
             ).save()
-            return mongo_to_dict(account, exclude_fields=['created_at', 'updated_at']), 203
+            return mongo_to_dict(account, exclude_fields=['created_at', 'updated_at']), 200
         except Exception as e:
             abort(e.code, str(e))
 
@@ -74,4 +74,15 @@ class AccountApiController(Resource):
         account = Account.objects(user__id=user_id, deleted=False).first()
         if not account:
             raise ModelDoesNotExist(Account.__name__, user_id)
+        return mongo_to_dict(account, exclude_fields=['created_at', 'updated_at']), 200
+
+class DestinyApiController(Resource):
+
+    def get(self, number=None):
+        # Búsqueda de cuenta para transferir (validación).
+        if number is None:
+            raise APIException(404, 'Recurso no encontrado')
+        account = Account.objects(number=number, deleted=False).first()
+        if not account:
+            raise ModelDoesNotExist(Account.__name__, number)
         return mongo_to_dict(account, exclude_fields=['created_at', 'updated_at']), 200

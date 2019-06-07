@@ -27,7 +27,7 @@ class CurrenciesApiController(Resource):
             raise APIException(400, 'La moneda ya existe')
         try:
             currency = Currency(name=name).save()
-            return mongo_to_dict(currency, exclude_fields=['created_at', 'updated_at']), 203
+            return mongo_to_dict(currency, exclude_fields=['created_at', 'updated_at']), 200
         except Exception as e:
             abort(e.code, str(e))
 

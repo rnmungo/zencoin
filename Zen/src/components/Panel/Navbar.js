@@ -31,11 +31,11 @@ class Navbar extends Component {
                         </li>
                     </ul>
                     <ul className="navbar-nav ml-auto">
-                        <li className="nav-item"><a className="nav-link" href="#">{username}</a></li>
+                        <li className="nav-item active"><a className="nav-link" href="#">{username}</a></li>
                         <li className="nav-item">
-                            <button type="button" className="nav-link" onClick={this.props.handleLogOut}>
+                            <a href="#" className="nav-link" onClick={this.props.handleLogOut}>
                                 Cerrar Sesión
-                            </button>
+                            </a>
                         </li>
                     </ul>
                 </div>

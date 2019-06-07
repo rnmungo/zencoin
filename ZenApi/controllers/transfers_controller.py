@@ -35,7 +35,7 @@ class TransfersApiController(Resource):
             # Envío de e-mail de transferencia.
             ZenMail.send_transfer_message(self.mail, from_account,
                                           to_account, transfer.total)
-            return mongo_to_dict(transfer, exclude_fields=['updated_at']), 203
+            return mongo_to_dict(transfer, exclude_fields=['updated_at']), 200
         except SMTPServerDisconnected:
             return {'message': 'Error al enviar el mail predeterminado.'}, 500
         except Exception as e:
@@ -61,7 +61,7 @@ class TransfersApiController(Resource):
             raise ModelDoesNotExist(Account.__name__, to_account_id)
         if not total:
             raise MissingDataRequest('total')
-        if type(total) != float:
+        if type(total) not in (float, int):
             raise APIException(409, 'Error de formato, el total debe ser un número decimal.')
 
     def get_models(self, from_account_id, to_account_id, total):

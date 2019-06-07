@@ -37,7 +37,7 @@ class UsersApiController(Resource):
             # Envío de e-mail de bienvenida.
             ZenMail.send_welcome_message(self.mail, user)
             return mongo_to_dict(account,
-                exclude_fields=['created_at', 'updated_at']), 203
+                exclude_fields=['created_at', 'updated_at']), 200
         except SMTPServerDisconnected:
             return {'message': 'Error al enviar el mail predeterminado.'}, 500
         except Exception as e:

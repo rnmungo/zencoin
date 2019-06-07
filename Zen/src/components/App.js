@@ -55,6 +55,8 @@ class App extends Component {
   }
 
   logOut = () => {
+    localStorage.removeItem('ZenCoinUserId');
+    localStorage.removeItem('ZenCoinAuthenticated');
     this.setState({
       authenticated: !this.state.authenticated,
       userId: ''
@@ -79,7 +81,7 @@ class App extends Component {
           path="/transfer"
           component={
             () => this.state.authenticated
-              ? <Transfer authMethod={this.authenticate} auth={this.state.authenticated} />
+              ? <Transfer authMethod={this.authenticate} auth={this.state.authenticated} user={this.state.user} handleLogOut={this.logOut} />
               : <Login authMethod={this.authenticate} auth={this.state.authenticated} />
             } />
         <Route

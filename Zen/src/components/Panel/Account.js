@@ -15,7 +15,7 @@ class Account extends Component {
       return (
         <div className="container border rounded text-center mt-3">
           <h3>Cuenta #{account.number}</h3>
-          <h2>Saldo {Math.round(account.saldo, 3)} ZenCoins</h2>
+          <h2>Saldo {Math.round(account.saldo, 5)} ZenCoins</h2>
         </div>
       );
     }
