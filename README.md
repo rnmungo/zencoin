@@ -4,19 +4,20 @@ Aplicación que simula el uso de una moneda electrónica.
 ## API
 Fue desarrollada en Flask, usando librerías como flask-restful, flask-mail y mongoengine para la interacción con la base de datos.
 
+## Instalación
+Se debe descargar el proyecto utilizando el comando <b>git clone https://github.com/Rokethor/zencoin.git</b></br>
+Una vez descargado, se debe ingresar a la carpeta y ejecutar alguno de los siguientes comandos:</br></br>
+1 - <b>python development.py</b> ---> Este comando levantará el servicio de la aplicación en un estado de debug, ya que tiene configuraciónes pre establecidas para fines de desarrollo.</br>
+2 - <b>python main.py</b> ---> A diferencia del comando anterior, este levanta el servicio en estado productivo.</br></br>
+
+<i>Nota:</i> Para que la aplicación pueda ser ejecutada correctamente deben de tener todos los requerimientos explicados en el siguiente apartado.
+
 ## Requerimientos
 Es necesario tener instaladas las siguientes librerías:</br></br>
 1 - <b>Python</b> en su versión 3.x: Para ello dirigirse al siguiente <a href="https://www.python.org/downloads/">link</a>.</br>
-2 - <b>Flask:</b> Instalarlo es sencillo, deben abrir la consola CMD en windows o terminal en linux y ejecutar el comando <b>pip install flask</b>.</br>
-3 - <b>Dependencias de Flask:</b> Deben ejecutar en la consola el siguiente comando: <b>pip install flask-restful flask-mail flask-corn</b>.</br>
+2 - <b>virtualenv:</b> Instalarlo es sencillo, deben abrir la consola CMD en windows o terminal en linux y ejecutar el comando <b>pip install virtualenv</b>.</br>
+3 - <b>Dependencias:</b> Deben generar una máquina virtual con el comando <b>python -m venv myvenv</b>, siendo myvenv la carpeta donde se creará. Luego deben levantar la máquina virtual ejecutando el comando myvenv/Scripts/activate. Por último deben acceder a la carpeta requirements ubicada en la carpeta ZenApi y ejecutar el comando <b>pip install -r requirements.txt</b>.</br>
 4 - <b>MongoDB:</b> Para instalar MongoDB deben dirigirse a la página oficial en el siguiente <a href="https://www.mongodb.com/download-center/community">enlace</a>, descargar el ejecutable e instalarlo.</br>
-5 - <b>Mongoengine:</b> ORM utilizado para implementar los modelos de la aplicación. Para instalarlo deben ejecutar el comando <b>pip install mongoengine</b>.</br></br>
-
-## Instalación
-Para su instalación, se debe descargar el proyecto utilizando el comando <b>git clone https://github.com/Rokethor/zencoin.git</b></br>
-Una vez descargado, se debe ingresar a la carpeta y ejecutar alguno de los siguientes comandos:</br></br>
-1 - <b>python development.py</b> ---> Este comando levantará el servicio de la aplicación en un estado de debug, ya que tiene configuraciónes pre establecidas para fines de desarrollo.</br>
-2 - <b>python main.py</b> ---> A diferencia del comando anterior, este levanta el servicio en estado productivo.
 
 ## Configuración de BBDD
 Para que la aplicación se enlace de manera correcta con la base de datos, es necesario configurar los datos correspondientes en el archivo <b>config.py</b>.</br>
