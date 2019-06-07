@@ -72,7 +72,7 @@ class TransferContent extends Component {
       return (
         <div className="container text-center mt-5">
           <h3>Transferencia Inmediata</h3>
-          <h2>Saldo Actual {Math.round(this.props.account.saldo, 5)} ZenCoins</h2>
+          <h2>Saldo Actual {Math.round(account.saldo, 5)} ZenCoins</h2>
           <div className="form-group row text-left mt-5">
             <div className="col-12 col-sm-6 col-lg-12 col-xl-6">
               <input id="accountNumber" type="number" className="form-control form-control-sm shadow-sm mt-1" value={this.state.number} onChange={this.handleInputChange} aria-describedby="accountNumberHelp" />

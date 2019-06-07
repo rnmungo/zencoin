@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import logo from '../Global/img/money.png';
 import '../Global/css/Login.css';
+import '../Global/css/bootstrap.min.css';
 import axios from  'axios';
 
 class Login extends Component {
@@ -9,7 +11,7 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      error: ''
+      message: ''
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleLoginButton = this.handleLoginButton.bind(this);
@@ -44,7 +46,7 @@ class Login extends Component {
       }
     }).catch((err) => {
       this.setState({
-        error: 'El e-mail y contraseña no coinciden',
+        message: 'El e-mail y contraseña no coinciden',
       });
     });
   }
@@ -72,10 +74,15 @@ class Login extends Component {
               <span className="a-field__label">Contraseña</span>
             </span>
           </label>
-          <button className="Button" onClick={this.handleLoginButton}>
-              Iniciar Sesión
-          </button>
-          <p>{this.state.error}</p>
+          <div className="d-inline-block">
+            <button className="btn btn-secondary text-white mx-3" onClick={this.handleLoginButton}>
+                Iniciar Sesión
+            </button>
+            <Link className="btn btn-info text-white" to="/register">
+                Registrate
+            </Link>
+          </div>
+          <p>{this.state.message}</p>
       </div>
     );
   }
