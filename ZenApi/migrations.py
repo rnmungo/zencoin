@@ -10,6 +10,8 @@ def migrate(config):
       collection = db[collection_name]
       collection.insert_one({})
       collection.delete_many({})
+   collection = db['currencies']
+   collection.insert_one({'name': 'ZenCoin'})
 
 def run(argv):
    try:
