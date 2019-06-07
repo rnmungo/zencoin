@@ -1,5 +1,5 @@
 // Dependencies
-import React, { Component, Redirect } from 'react';
+import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // Components
@@ -9,6 +9,7 @@ import Password from './User/Password';
 import Panel from './Panel';
 import Welcome from './Welcome';
 import Page404 from './Errors/404';
+import axios from  'axios';
 
 
 class App extends Component {
@@ -23,7 +24,22 @@ class App extends Component {
     }
     this.state = {
       authenticated: authenticated,
-      userId: userId
+      userId: userId,
+      user: {}
+    }
+  }
+
+  componentDidMount() {
+    if (this.state.authenticated && this.state.userId) {
+      const instance = axios.create({ baseURL: 'http://localhost:9000' });
+      instance.get('/users/' + this.state.userId)
+        .then((res) => {
+          if (res.status === 200) {
+            this.setState({user: res.data});
+          }
+        }).catch((err) => {
+          console.log(err)
+      });
     }
   }
 
@@ -38,6 +54,13 @@ class App extends Component {
     });
   }
 
+  logOut = () => {
+    this.setState({
+      authenticated: !this.state.authenticated,
+      userId: ''
+    });
+  }
+
   render () {
     return (
       <Switch>
@@ -48,7 +71,7 @@ class App extends Component {
           path="/panel"
           component={
             () => this.state.authenticated
-              ? <Panel authMethod={this.authenticate} auth={this.state.authenticated} />
+              ? <Panel authMethod={this.authenticate} auth={this.state.authenticated} user={this.state.user} handleLogOut={this.logOut} />
               : <Login authMethod={this.authenticate} auth={this.state.authenticated} />
             } />
         <Route

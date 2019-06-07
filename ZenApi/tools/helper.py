@@ -47,7 +47,7 @@ def list_field_to_dict(list_field, exclude_fields=[]):
 
 def mongo_to_python_type(field, data):
     if isinstance(field, DateTimeField):
-        return str(data.isoformat())
+        return str(data.strftime("%d/%m/%Y %H:%M"))
     elif isinstance(field, ComplexDateTimeField):
         return field.to_python(data).isoformat()
     elif isinstance(field, StringField):

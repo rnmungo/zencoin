@@ -1,4 +1,4 @@
-import React, { Component, Redirect } from 'react';
+import React, { Component } from 'react';
 import logo from '../Global/img/money.png';
 import '../Global/css/Login.css';
 import axios from  'axios';

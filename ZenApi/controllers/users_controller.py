@@ -79,7 +79,7 @@ class UserApiController(Resource):
         user = User.objects(id=id).first()
         if not user:
             raise ModelDoesNotExist(User.__name__, id)
-        return mongo_to_dict(user), 200
+        return mongo_to_dict(user, exclude_fields=['created_at', 'updated_at', 'password']), 200
 
     def put(self, id=None):
         # Cambio de contraseña

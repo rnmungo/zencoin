@@ -17,10 +17,10 @@ class ConversionsApiController(Resource):
         conversions = Conversion.objects(from_currency__id=currency_id)
         if not conversions.count():
             raise APIException(409, 'No hay conversiones cargadas')
-        dict_conversions = {}
-        for i, conversion in enumerate(conversions, start=1):
-            dict_conversions[i] = mongo_to_dict(conversion, exclude_fields=['created_at', 'updated_at'])
-        return dict_conversions, 200
+        list_conversions = []
+        for conversion in conversions:
+            list_conversions.append(mongo_to_dict(conversion, exclude_fields=['created_at', 'updated_at']))
+        return list_conversions, 200
 
 
 class ConversionApiController(Resource):

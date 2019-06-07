@@ -18,7 +18,7 @@ class Development(Config):
 
     DEBUG        = True
     SERVER_NAME  = 'localhost:9000'
-    MONGODB_DB   = 'zen_dev'
+    MONGODB_DB   = 'zen_test'
     MONGODB_HOST = 'localhost'
     MONGODB_PORT = 27017
 

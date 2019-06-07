@@ -90,10 +90,10 @@ class MovementsApiController(Resource):
         transfers = Transfer.objects(Q(from_account__id=id) | Q(to_account__id=id)).order_by('-created_at')
         if not transfers.count():
             raise APIException(409, 'No hay transferencias')
-        dict_transfers = {}
-        for i, transfer in enumerate(transfers, start=1):
-            dict_transfers[i] = mongo_to_dict(transfer, exclude_fields=['updated_at'])
-        return dict_transfers, 200
+        list_transfers = []
+        for transfer in transfers:
+            list_transfers.append(mongo_to_dict(transfer, exclude_fields=['updated_at']))
+        return list_transfers, 200
 
 
 class TransferApiController(Resource):
