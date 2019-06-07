@@ -18,7 +18,7 @@ class Navbar extends Component {
         <nav className="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div className="container">
                 <Link to="/"><img src={logo} className="img-fluid icon mx-2 rounded-circle shadow" alt={logo} /></Link>
-                <Link className="navbar-brand" to="/">ZenCoin</Link>
+                <Link className="navbar-brand" to="/panel">ZenCoin</Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span className="navbar-toggler-icon"></span>
                 </button>

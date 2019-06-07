@@ -32,8 +32,3 @@ Los datos relevantes a configurar para establecer la conexión con la base de da
 2 - MONGODB_HOST: Aquí debe ir la IP del Host. Si se ejecuta en un entorno local para fines de desarrollo, puede simplemente configurarse como localhost.</br>
 3 - MONGODB_PORT: Aquí debe configurarse el puerto por el cual accederá.</br>
 4 - Luego de realizar las configuraciones, es necesario que se ejecute el script de migraciones ubicado en la raíz de la API con el siguiente comando: <b>python migrate.py -e 'environment'</b>. 'environment' se debe reemplazar por 'development' o 'production'. Esta separación es para realizar la migración en la base de datos de desarrollo o productiva.
-
-# Importante
-El desarrollo no se encuentra finalizado, en el transcurso del desarrollo me vi limitado por falta de conocimiento sobre react.js, por lo que faltan detalles como el redireccionamiento de las páginas. Lo que se debe hacer para probar la aplicación es:</br></br>
-1 - Autenticarse. Una vez se hayan logueado, no arrojará un aviso. En caso de no haber coincidido la combinación de email y contraseña, mostrará un mensaje de error.</br>
-2 - Acceder a la ruta de la cuenta del usuario ('/panel'). Desde allí se podrá comenzar a operar sobre el sistema y realizar transferencias.</br>

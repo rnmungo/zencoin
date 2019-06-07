@@ -4,7 +4,7 @@ from flask_mail import Message
 class ZenMail:
 
     FIRM      = "Atte. Equipo de ZenCoin"
-    LINEBREAK = "<br/><br/>"
+    LINEBREAK = "</br></br>"
 
     @classmethod
     def send_welcome_message(cls, mail, user):
@@ -16,7 +16,7 @@ class ZenMail:
     def get_welcome_message(cls, name):
         subject = 'Bienvenido a ZenCoin'
         html    = "%s, queremos darle la bienvenida y agradecerle " % name
-        html    += "por elegirnos para formar parte de ZenCoin"
+        html    += "por elegirnos para formar parte de ZenCoin. "
         html    += "En ZenCoin, podrá realizar transacciones, llevar el "
         html    += "registro de todos sus movimientos, ver cotizaciones "
         html    += "y mucho más!" + ZenMail.LINEBREAK
