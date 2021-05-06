@@ -2,7 +2,7 @@ aniso8601==6.0.0
 blinker==1.4
 Click==7.0
 Flask==1.0.3
-Flask-Cors==3.0.7
+Flask-Cors==3.0.9
 Flask-Mail==0.9.1
 Flask-RESTful==0.3.7
 itsdangerous==1.1.0
