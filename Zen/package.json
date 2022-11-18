@@ -16,7 +16,7 @@
     "react-native": "^0.59.8",
     "react-native-sweet-alert": "^2.1.0",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "3.0.1",
+    "react-scripts": "5.0.1",
     "sweetalert-react": "^0.4.11"
   },
   "scripts": {
